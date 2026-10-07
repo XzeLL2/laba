@@ -1,0 +1,20 @@
+services:
+  lab-api:
+    build: .
+    container_name: lab-api
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    volumes:
+      - /var/lib/lab:/var/lib/lab
+    environment:
+      - APP_ENV=production
+      - APP_DEBUG=false
+      - DATABASE_URL=sqlite:////var/lib/lab/labdb.sqlite
+      - STORAGE_PATH=/var/lib/lab/attachments
+      - BACKUP_PATH=/var/lib/lab/backups
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
