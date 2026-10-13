@@ -4,8 +4,10 @@ import { ProtectedRoute } from './components/ProtectedRoute'
 import { Layout } from './components/Layout'
 import { LoginPage } from './pages/LoginPage'
 import { DashboardPage } from './pages/DashboardPage'
+import { OrderDetailPage } from './pages/OrderDetailPage'
 import { ProtocolsPage } from './pages/ProtocolsPage'
-import { SamplesPage } from './pages/SamplesPage'
+import { ProtocolDetailPage } from './pages/ProtocolDetailPage'
+import { CustomersPage } from './pages/CustomersPage'
 import { MethodsPage } from './pages/MethodsPage'
 import { EquipmentPage } from './pages/EquipmentPage'
 import { FilesPage } from './pages/FilesPage'
@@ -36,8 +38,10 @@ function AppRoutes() {
     <Layout>
       <Routes>
         <Route path="/" element={<DashboardPage />} />
+        <Route path="/orders/:id" element={<OrderDetailPage />} />
         <Route path="/protocols" element={<ProtocolsPage />} />
-        <Route path="/samples" element={<SamplesPage />} />
+        <Route path="/protocols/:id" element={<ProtocolDetailPage />} />
+        <Route path="/customers" element={<CustomersPage />} />
         <Route path="/methods" element={<MethodsPage />} />
         <Route path="/equipment" element={<EquipmentPage />} />
         <Route path="/files" element={<FilesPage />} />

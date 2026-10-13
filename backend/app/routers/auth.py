@@ -1,8 +1,9 @@
 from datetime import timedelta
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status, Query
 from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
+from sqlalchemy import or_
 from app.database import get_db
 from app.models import Employee, EmployeeRole
 from app.schemas.employee import LoginIn, TokenOut, EmployeeOut, EmployeeCreate, EmployeeUpdate
@@ -68,6 +69,7 @@ async def create_employee(
         login=data.login,
         password_hash=hash_password(data.password),
         full_name=data.full_name,
+        position=data.position,
         role=data.role,
     )
     db.add(employee)
@@ -78,10 +80,17 @@ async def create_employee(
 
 @router.get("/employees", response_model=list[EmployeeOut])
 async def list_employees(
+    q: str = Query(None),
     db: AsyncSession = Depends(get_db),
     _: Employee = Depends(require_admin),
 ):
-    result = await db.execute(select(Employee).order_by(Employee.full_name))
+    query = select(Employee)
+    if q:
+        query = query.where(
+            or_(Employee.full_name.ilike(f"%{q}%"), Employee.position.ilike(f"%{q}%"))
+        )
+    query = query.order_by(Employee.full_name)
+    result = await db.execute(query)
     return result.scalars().all()
 
 
@@ -98,6 +107,8 @@ async def update_employee(
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Сотрудник не найден")
     if data.full_name is not None:
         employee.full_name = data.full_name
+    if data.position is not None:
+        employee.position = data.position
     if data.role is not None:
         employee.role = data.role
     if data.is_active is not None:

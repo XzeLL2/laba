@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, status, UploadFile, File,
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 from app.database import get_db
-from app.models import ServerFile, Employee
+from app.models import ServerFile, Employee, EmployeeRole
 from app.schemas.file import ServerFileCreate, ServerFileOut
 from app.routers.auth import get_current_employee, require_admin
 from app.config import settings

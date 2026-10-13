@@ -5,7 +5,16 @@ from fastapi.responses import JSONResponse
 from app.config import settings
 from app.utils.middleware import IPWhitelistMiddleware
 from app.utils.exceptions import LabError
-from app.routers import auth, files
+from app.routers import (
+    auth,
+    files,
+    customers,
+    methods,
+    equipment,
+    orders,
+    protocols,
+    attachments,
+)
 
 
 @asynccontextmanager
@@ -24,6 +33,12 @@ app = FastAPI(
 
 app.include_router(auth.router, prefix="/api")
 app.include_router(files.router, prefix="/api")
+app.include_router(customers.router, prefix="/api")
+app.include_router(methods.router, prefix="/api")
+app.include_router(equipment.router, prefix="/api")
+app.include_router(orders.router, prefix="/api")
+app.include_router(protocols.router, prefix="/api")
+app.include_router(attachments.router, prefix="/api")
 
 app.add_middleware(
     CORSMiddleware,

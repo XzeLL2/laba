@@ -7,6 +7,7 @@ from app.models import EmployeeRole
 class EmployeeBase(BaseModel):
     login: str
     full_name: str
+    position: Optional[str] = None
     role: EmployeeRole
 
 
@@ -16,6 +17,7 @@ class EmployeeCreate(EmployeeBase):
 
 class EmployeeUpdate(BaseModel):
     full_name: Optional[str] = None
+    position: Optional[str] = None
     role: Optional[EmployeeRole] = None
     is_active: Optional[bool] = None
     password: Optional[str] = Field(None, min_length=6)

@@ -1,7 +1,7 @@
 import { ReactNode } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
-import { LogOut, FileText, Users, FolderOpen, Settings } from 'lucide-react'
+import { LogOut, FileText, Users, FolderOpen, Settings, Building2 } from 'lucide-react'
 
 interface LayoutProps {
   children: ReactNode
@@ -20,7 +20,7 @@ export function Layout({ children }: LayoutProps) {
   const navItems = [
     { path: '/', label: 'Заявки', icon: FileText },
     { path: '/protocols', label: 'Протоколы', icon: FileText },
-    { path: '/samples', label: 'Образцы', icon: FileText },
+    { path: '/customers', label: 'Контрагенты', icon: Building2 },
     { path: '/methods', label: 'Методики', icon: FileText },
     { path: '/equipment', label: 'Оборудование', icon: FileText },
     { path: '/files', label: 'Файлы', icon: FolderOpen },

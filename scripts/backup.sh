@@ -1,9 +1,10 @@
 #!/bin/bash
 set -euo pipefail
 
-BACKUP_DIR="/var/lib/lab/backups"
-DB_FILE="/var/lib/lab/labdb.sqlite"
-ATTACHMENTS_DIR="/var/lib/lab/attachments"
+PROJECT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
+BACKUP_DIR="$PROJECT_DIR/backend/backups"
+DB_FILE="$PROJECT_DIR/backend/labdb.sqlite"
+ATTACHMENTS_DIR="$PROJECT_DIR/backend/attachments"
 TIMESTAMP=$(date +%Y%m%d_%H%M%S)
 ARCHIVE_NAME="lab_backup_${TIMESTAMP}.tar.gz"
 
